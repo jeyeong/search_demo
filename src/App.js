@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from 'react'
 
-function App() {
+const App = () => {
+  const searchQueryRef = useRef()
+  const [loading, setLoading] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
+
+  const submitHandler = (e) => {
+    e.preventDefault() // prevent page refresh
+
+    setLoading(true)
+
+    fetch(
+      `https://l2clhcofuc.execute-api.us-east-1.amazonaws.com/prod/pinecone?query=${searchQueryRef.current.value}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setSearchResults(res.matches)
+        setLoading(false)
+      })
+  }
+
+  console.log(searchResults)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={submitHandler}>
+        <label htmlFor="query-box">Search anything</label>
+        <div>
+          <input ref={searchQueryRef} name="query-box" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+
+      <div>
+        <h2>Search Results</h2>
+        {loading
+          ? 'loading...'
+          : searchResults.map(({ metadata }) => (
+              <div key={metadata.name}>
+                <h4>{metadata.name}</h4>
+                <p>{metadata.description}</p>
+              </div>
+            ))}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
