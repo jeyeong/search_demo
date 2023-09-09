@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 
 const App = () => {
   const searchQueryRef = useRef()
+  const datasetSelectRef = useRef()
   const [loading, setLoading] = useState(false)
   const [searchResults, setSearchResults] = useState([])
 
@@ -11,7 +12,7 @@ const App = () => {
     setLoading(true)
 
     fetch(
-      `https://l2clhcofuc.execute-api.us-east-1.amazonaws.com/prod/pinecone?query=${searchQueryRef.current.value}`
+      `https://l2clhcofuc.execute-api.us-east-1.amazonaws.com/prod/pinecone?query=${searchQueryRef.current.value}&catalog_id=${datasetSelectRef.current.value}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -19,8 +20,6 @@ const App = () => {
         setLoading(false)
       })
   }
-
-  console.log(searchResults)
 
   return (
     <div className="App">
@@ -31,6 +30,14 @@ const App = () => {
           <input type="submit" value="Search" />
         </div>
       </form>
+
+      <div>
+        <p style={{ marginBottom: 0 }}>Dataset</p>
+        <select ref={datasetSelectRef}>
+          <option value="nike">Nike</option>
+          <option value="walmart">Walmart</option>
+        </select>
+      </div>
 
       <div>
         <h2>Search Results</h2>
