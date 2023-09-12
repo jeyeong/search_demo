@@ -45,13 +45,18 @@ const App = () => {
   useEffect(() => {
     setLoading(true)
     debouncedSearchHandler(query, catalogSelected)
-  }, [query, catalogSelected])
+  }, [query, catalogSelected, debouncedSearchHandler])
 
   return (
     <ThemeProvider theme={theme}>
       <div
         className="App"
-        style={{ display: 'flex', flexDirection: 'column', height: 550 }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 550,
+          overflowX: 'hidden',
+        }}
       >
         <div style={{ display: 'flex', columnGap: 6 }}>
           {CATALOGS.map(({ name, id }) => (
@@ -63,7 +68,7 @@ const App = () => {
               }}
               color={'primary'}
               variant={id === catalogSelected ? 'filled' : 'outlined'}
-              sx={{ fontSize: '18px', padding: '0 4px' }}
+              sx={{ fontSize: '20px', padding: '0 4px' }}
             />
           ))}
         </div>
@@ -77,7 +82,6 @@ const App = () => {
             borderRadius: 50,
             boxShadow:
               '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
-            width: '95%',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
