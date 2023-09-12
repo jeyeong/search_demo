@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Chip, Typography, createTheme, ThemeProvider } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Chip, createTheme, ThemeProvider } from '@mui/material'
 import debounce from 'lodash.debounce'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -25,6 +25,7 @@ const CATALOGS = [
 const App = () => {
   const [loading, setLoading] = useState(false)
   const [catalogSelected, setCatalogSelected] = useState('nike')
+  const [query, setQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
 
   const [debouncedSearchHandler] = useState(() => {
@@ -41,6 +42,11 @@ const App = () => {
     return debounce(searchHandler, 1000)
   })
 
+  useEffect(() => {
+    setLoading(true)
+    debouncedSearchHandler(query, catalogSelected)
+  }, [query, catalogSelected])
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -52,6 +58,7 @@ const App = () => {
             <Chip
               label={name}
               onClick={() => {
+                setQuery('')
                 setCatalogSelected(id)
               }}
               color={'primary'}
@@ -85,9 +92,9 @@ const App = () => {
               <SearchIcon />
             </div>
             <input
+              value={query}
               onChange={(e) => {
-                setLoading(true)
-                debouncedSearchHandler(e.target.value, catalogSelected)
+                setQuery(e.target.value)
               }}
               name="query-box"
               style={{
