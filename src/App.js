@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Chip, createTheme, ThemeProvider } from '@mui/material'
+import { Chip, Typography, createTheme, ThemeProvider } from '@mui/material'
 import debounce from 'lodash.debounce'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -10,6 +10,9 @@ const theme = createTheme({
       main: '#575be1',
       contrastText: '#fff',
     },
+  },
+  typography: {
+    fontSize: 18,
   },
 })
 
@@ -40,10 +43,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        className="App"
-        style={{ height: '500px', display: 'flex', flexDirection: 'column' }}
-      >
+      <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', columnGap: 6 }}>
           {CATALOGS.map(({ name, id }) => (
             <Chip
@@ -60,24 +60,25 @@ const App = () => {
         <form
           style={{
             marginTop: 12,
-            padding: 10,
+            marginBottom: 12,
+            padding: 20,
             border: '1.5px solid rgb(221, 221, 221)',
             borderRadius: 50,
             boxShadow:
               '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
-            width: '90%',
+            width: '95%',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
             <div
               style={{
-                paddingLeft: '4px',
-                paddingRight: '8px',
+                paddingLeft: 6,
+                paddingRight: 12,
                 display: 'grid',
                 placeItems: 'center',
               }}
             >
-              <SearchIcon fontSize="small" />
+              <SearchIcon />
             </div>
             <input
               onChange={(e) => {
@@ -89,7 +90,7 @@ const App = () => {
                 border: 'none',
                 outline: 'none',
                 width: '100%',
-                fontSize: '16px',
+                fontSize: '18px',
               }}
               type="search"
               autoComplete="off"
