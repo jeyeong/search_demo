@@ -43,7 +43,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App" style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        className="App"
+        style={{ display: 'flex', flexDirection: 'column', height: 550 }}
+      >
         <div style={{ display: 'flex', columnGap: 6 }}>
           {CATALOGS.map(({ name, id }) => (
             <Chip
@@ -53,6 +56,7 @@ const App = () => {
               }}
               color={'primary'}
               variant={id === catalogSelected ? 'filled' : 'outlined'}
+              sx={{ fontSize: '18px', padding: '0 4px' }}
             />
           ))}
         </div>
