@@ -40,7 +40,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <div
+        className="App"
+        style={{ height: '500px', display: 'flex', flexDirection: 'column' }}
+      >
         <div style={{ display: 'flex', columnGap: 6 }}>
           {CATALOGS.map(({ name, id }) => (
             <Chip
@@ -62,10 +65,10 @@ const App = () => {
             borderRadius: 50,
             boxShadow:
               '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
-            width: 'max-content',
+            width: '90%',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
             <div
               style={{
                 paddingLeft: '4px',
@@ -85,7 +88,7 @@ const App = () => {
               style={{
                 border: 'none',
                 outline: 'none',
-                width: '350px',
+                width: '100%',
                 fontSize: '16px',
               }}
               type="search"
@@ -98,7 +101,7 @@ const App = () => {
           </div>
         </form>
 
-        <div>
+        <div style={{ flex: 1, overflowY: 'auto' }}>
           {loading
             ? 'loading...'
             : searchResults.map(({ metadata }) => (
