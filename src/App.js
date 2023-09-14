@@ -17,14 +17,24 @@ const theme = createTheme({
 })
 
 const CATALOGS = [
-  { name: 'Nike', id: 'nike' },
-  { name: 'Walmart', id: 'walmart' },
-  { name: 'Netflix', id: 'netflix' },
+  // { name: 'Nike', id: 'nike' },
+  // { name: 'Walmart', id: 'walmart' },
+  // { name: 'Netflix', id: 'netflix' },
+  {
+    name: 'Movies',
+    id: 'movies',
+    placeholder: 'Super hero movies for my 10 year old',
+  },
+  {
+    name: 'Groceries',
+    id: 'groceries',
+    placeholder: 'Wine pairings for date night',
+  },
 ]
 
 const App = () => {
   const [loading, setLoading] = useState(false)
-  const [catalogSelected, setCatalogSelected] = useState('nike')
+  const [catalogSelected, setCatalogSelected] = useState(0)
   const [query, setQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
 
@@ -44,7 +54,7 @@ const App = () => {
 
   useEffect(() => {
     setLoading(true)
-    debouncedSearchHandler(query, catalogSelected)
+    debouncedSearchHandler(query, CATALOGS[catalogSelected].id)
   }, [query, catalogSelected, debouncedSearchHandler])
 
   return (
@@ -56,32 +66,48 @@ const App = () => {
           flexDirection: 'column',
           height: 550,
           overflowX: 'hidden',
+          backgroundColor: '#27242C',
+          padding: 40,
+          borderRadius: 12,
         }}
       >
-        <div style={{ display: 'flex', columnGap: 6 }}>
-          {CATALOGS.map(({ name, id }) => (
+        <div style={{ display: 'flex', columnGap: 12 }}>
+          {CATALOGS.map(({ name, id }, index) => (
             <Chip
+              key={id}
               label={name}
               onClick={() => {
                 setQuery('')
-                setCatalogSelected(id)
+                setCatalogSelected(index)
               }}
               color={'primary'}
-              variant={id === catalogSelected ? 'filled' : 'outlined'}
-              sx={{ fontSize: '20px', padding: '0 4px' }}
+              variant={index === catalogSelected ? 'filled' : 'outlined'}
+              sx={{
+                fontSize: '20px',
+                padding: '20px 8px',
+                borderRadius: '30px',
+                backgroundColor: index !== catalogSelected && '#eee',
+                border: '1.5px solid rgba(87,91,225,0.7)',
+                ':hover': {
+                  backgroundColor:
+                    index !== catalogSelected && '#fff !important',
+                },
+                fontWeight: 'bold',
+              }}
             />
           ))}
         </div>
 
         <form
           style={{
-            marginTop: 12,
+            marginTop: 24,
             marginBottom: 12,
-            padding: 20,
+            padding: 16,
             border: '1.5px solid rgb(221, 221, 221)',
             borderRadius: 50,
             boxShadow:
               '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
+            backgroundColor: '#fff',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -105,14 +131,14 @@ const App = () => {
                 border: 'none',
                 outline: 'none',
                 width: '100%',
-                fontSize: '18px',
+                fontSize: '20px',
               }}
               type="search"
               autoComplete="off"
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
-              placeholder="Search anything"
+              placeholder={CATALOGS[catalogSelected].placeholder}
             />
           </div>
         </form>
