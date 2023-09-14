@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { Chip, createTheme, ThemeProvider } from '@mui/material'
+import {
+  Chip,
+  createTheme,
+  ThemeProvider,
+  CircularProgress,
+} from '@mui/material'
 import debounce from 'lodash.debounce'
 
 import SearchIcon from '@mui/icons-material/Search'
+
+import SearchResultTile from './SearchResultTile'
 
 const theme = createTheme({
   palette: {
     primary: {
       main: '#575be1',
       contrastText: '#fff',
+    },
+    white: {
+      main: '#fff',
     },
   },
   typography: {
@@ -24,11 +34,21 @@ const CATALOGS = [
     name: 'Movies',
     id: 'movies',
     placeholder: 'Super hero movies for my 10 year old',
+    getters: {
+      getTitle: (item) => item.Title,
+      getDescription: (item) => item.Overview,
+      getImgSrc: (item) => item.Poster_Url,
+    },
   },
   {
     name: 'Groceries',
     id: 'groceries',
     placeholder: 'Wine pairings for date night',
+    getters: {
+      getTitle: (item) => item.name,
+      getDescription: (item) => item.description,
+      getImgSrc: (item) => `https://${item.images}`,
+    },
   },
 ]
 
@@ -57,6 +77,8 @@ const App = () => {
     debouncedSearchHandler(query, CATALOGS[catalogSelected].id)
   }, [query, catalogSelected, debouncedSearchHandler])
 
+  const { getters } = CATALOGS[catalogSelected]
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -64,7 +86,7 @@ const App = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          height: 550,
+          height: 600,
           overflowX: 'hidden',
           backgroundColor: '#27242C',
           padding: 40,
@@ -143,15 +165,29 @@ const App = () => {
           </div>
         </form>
 
-        <div style={{ flex: 1, overflowY: 'auto' }}>
-          {loading
-            ? 'loading...'
-            : searchResults.map(({ metadata }) => (
-                <div key={metadata.name}>
-                  <h4>{metadata.name}</h4>
-                  <p>{metadata.description}</p>
-                </div>
-              ))}
+        <div
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            marginTop: 16,
+            paddingRight: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: 16,
+          }}
+        >
+          {loading ? (
+            <CircularProgress color="white" size={30} />
+          ) : (
+            searchResults.map(({ metadata }, index) => (
+              <SearchResultTile
+                key={`${metadata.name}-${index}`}
+                title={getters.getTitle(metadata)}
+                description={getters.getDescription(metadata)}
+                imgSrc={getters.getImgSrc(metadata)}
+              />
+            ))
+          )}
         </div>
       </div>
     </ThemeProvider>
