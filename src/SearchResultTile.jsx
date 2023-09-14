@@ -1,58 +1,61 @@
-import React from 'react'
-
+import React from "react";
+import { Typography, Paper, Box } from "@mui/material";
 const SearchResultTile = ({ title, description, imgSrc }) => {
   return (
-    <div
+    <Paper
+      elevation={3}
       style={{
-        backgroundColor: '#f1f2fd',
+        backgroundColor: "white",
         borderRadius: 12,
-        display: 'flex',
-        padding: '20px 48px 20px 24px',
+        display: "flex",
+        padding: "20px 48px 20px 24px",
         columnGap: 30,
+        borderColor: "#575be1",
+        border: "3px solid #575be1",
       }}
     >
-      <div
+      <Box
         style={{
           borderRadius: 12,
-          overflow: 'hidden',
-          width: 'max-content',
-          height: '100px',
+          overflow: "hidden",
+          width: "max-content",
+          height: "100px",
         }}
       >
         <img src={imgSrc} width={100} height="auto" />
-      </div>
+      </Box>
       <div
         style={{
           flex: 1,
           marginTop: 6,
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
-        <p
-          style={{
-            fontSize: '22px',
-            fontWeight: 'bold',
+        <Typography
+          sx={{
+            fontSize: "20px",
+            fontWeight: "bold",
             margin: 0,
           }}
         >
           {title}
-        </p>
-        <p
-          style={{
-            fontSize: '18px',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "16px",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           {description}
-        </p>
+        </Typography>
       </div>
-    </div>
-  )
-}
+    </Paper>
+  );
+};
 
-export default SearchResultTile
+export default SearchResultTile;
