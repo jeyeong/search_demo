@@ -92,6 +92,7 @@ const App = () => {
           overflowX: "hidden",
           backgroundColor: "#27242C",
           padding: 40,
+          paddingTop: 25,
           borderRadius: 12,
         }}
       >
@@ -99,9 +100,9 @@ const App = () => {
           sx={{
             borderRadius: "20px",
             backgroundColor: "primary.main",
-            width: "10%",
+            width: "150px",
             p: 1,
-            py: 1,
+            alignSelf: "end",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -109,7 +110,7 @@ const App = () => {
         >
           <Typography
             color="white.main"
-            sx={{ fontSize: "15px", fontWeight: "1000" }}
+            sx={{ fontSize: "14px", fontWeight: "bold" }}
           >
             TRY IT YOURSELF!
           </Typography>
