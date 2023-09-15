@@ -81,147 +81,160 @@ const App = () => {
 
   const { getters } = CATALOGS[catalogSelected]
 
+  const isXS = window.innerWidth < 600
+
   return (
-    <ThemeProvider theme={theme}>
-      <div
-        className="App"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: 600,
-          overflowX: 'hidden',
-          backgroundColor: '#27242C',
-          padding: 40,
-          paddingTop: 25,
-          borderRadius: 12,
-        }}
-      >
+    <Box>
+      <ThemeProvider theme={theme}>
         <Box
+          className="App"
           sx={{
-            // borderRadius: '20px',
-            backgroundColor: 'primary.main',
-            width: '150px',
-            p: 1,
-            alignSelf: 'end',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography
-            color="white.main"
-            sx={{ fontSize: '14px', fontWeight: 'bold' }}
-          >
-            TRY IT YOURSELF!
-          </Typography>
-        </Box>
-        {/* <div style={{ display: "flex", columnGap: 12 }}>
-          {CATALOGS.map(({ name, id }, index) => (
-            <Chip
-              key={id}
-              label={name}
-              onClick={() => {
-                setQuery("");
-                setCatalogSelected(index);
-              }}
-              color={"primary"}
-              variant={index === catalogSelected ? "filled" : "outlined"}
-              sx={{
-                fontSize: "20px",
-                padding: "20px 8px",
-                borderRadius: "30px",
-                backgroundColor: index !== catalogSelected && "#eee",
-                border: "1.5px solid rgba(87,91,225,0.7)",
-                ":hover": {
-                  backgroundColor:
-                    index !== catalogSelected && "#fff !important",
-                },
-                fontWeight: "bold",
-              }}
-            />
-          ))}
-        </div> */}
-
-        <form
-          style={{
-            marginTop: 18,
-            marginBottom: 10,
-            padding: 16,
-            border: '1.5px solid rgb(221, 221, 221)',
-            borderRadius: 50,
-            boxShadow:
-              '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
-            backgroundColor: '#fff',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-            <div
-              style={{
-                paddingLeft: 6,
-                paddingRight: 12,
-                display: 'grid',
-                placeItems: 'center',
-              }}
-            >
-              <SearchIcon />
-            </div>
-            <input
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value)
-              }}
-              name="query-box"
-              style={{
-                border: 'none',
-                outline: 'none',
-                width: '100%',
-                fontSize: '18px',
-              }}
-              type="search"
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="off"
-              spellCheck="false"
-              placeholder={CATALOGS[catalogSelected].placeholder}
-            />
-          </div>
-        </form>
-
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            marginTop: 16,
-            paddingRight: 8,
             display: 'flex',
             flexDirection: 'column',
-            rowGap: 16,
+            height: '600px',
+            overflowX: 'hidden',
+            backgroundColor: '#27242C',
+            padding: { xs: '16px', sm: '40px' },
+            paddingTop: '25px',
+            borderRadius: '12px',
           }}
         >
-          {loading ? (
+          <Box sx={{ display: 'flex', alignContent: 'center' }}>
             <Box
               sx={{
-                width: '100%',
-                height: '100%',
                 display: 'flex',
+                columnGap: { xs: '8px', sm: '12px' },
+                flex: 1,
+              }}
+            >
+              {CATALOGS.map(({ name, id }, index) => (
+                <Chip
+                  key={id}
+                  label={name}
+                  onClick={() => {
+                    setQuery('')
+                    setCatalogSelected(index)
+                  }}
+                  color={'primary'}
+                  variant={index === catalogSelected ? 'filled' : 'outlined'}
+                  sx={{
+                    fontSize: { xs: '16px', sm: '20px' },
+                    padding: { xs: '16px 4px', sm: '20px 8px' },
+                    borderRadius: '30px',
+                    backgroundColor: index !== catalogSelected && '#eee',
+                    border: '1.5px solid rgba(87,91,225,0.7)',
+                    ':hover': {
+                      backgroundColor:
+                        index !== catalogSelected && '#fff !important',
+                    },
+                    fontWeight: 'bold',
+                  }}
+                />
+              ))}
+            </Box>
+            <Box
+              sx={{
+                display: { xs: 'none', sm: 'flex' },
+                // borderRadius: '20px',
+                backgroundColor: 'primary.main',
+                width: '150px',
+                p: 1,
+                alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <CircularProgress color="white" size={50} />
+              <Typography
+                color="white.main"
+                sx={{ fontSize: '14px', fontWeight: 'bold' }}
+              >
+                TRY IT YOURSELF!
+              </Typography>
             </Box>
-          ) : (
-            searchResults.map(({ metadata }, index) => (
-              <SearchResultTile
-                key={`${metadata.name}-${index}`}
-                title={getters.getTitle(metadata)}
-                description={getters.getDescription(metadata)}
-                imgSrc={getters.getImgSrc(metadata)}
+          </Box>
+
+          <form
+            style={{
+              marginTop: 18,
+              marginBottom: 10,
+              padding: isXS ? 12 : 16,
+              border: '1.5px solid rgb(221, 221, 221)',
+              borderRadius: 50,
+              boxShadow:
+                '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
+              backgroundColor: '#fff',
+            }}
+          >
+            <div
+              style={{ display: 'flex', alignItems: 'center', width: '100%' }}
+            >
+              <div
+                style={{
+                  paddingLeft: 6,
+                  paddingRight: 12,
+                  display: 'grid',
+                  placeItems: 'center',
+                }}
+              >
+                <SearchIcon />
+              </div>
+              <input
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value)
+                }}
+                name="query-box"
+                style={{
+                  border: 'none',
+                  outline: 'none',
+                  width: '100%',
+                  fontSize: isXS ? '17px' : '18px',
+                }}
+                type="search"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                placeholder={CATALOGS[catalogSelected].placeholder}
               />
-            ))
-          )}
-        </div>
-      </div>
-    </ThemeProvider>
+            </div>
+          </form>
+
+          <div
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              marginTop: isXS ? 14 : 16,
+              paddingRight: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              rowGap: isXS ? 14 : 16,
+            }}
+          >
+            {loading ? (
+              <Box
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <CircularProgress color="white" size={50} />
+              </Box>
+            ) : (
+              searchResults.map(({ metadata }, index) => (
+                <SearchResultTile
+                  key={`${metadata.name}-${index}`}
+                  title={getters.getTitle(metadata)}
+                  description={getters.getDescription(metadata)}
+                  imgSrc={getters.getImgSrc(metadata)}
+                />
+              ))
+            )}
+          </div>
+        </Box>
+      </ThemeProvider>
+    </Box>
   )
 }
 

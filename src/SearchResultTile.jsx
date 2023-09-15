@@ -1,6 +1,8 @@
 import React from 'react'
 import { Typography, Paper, Box } from '@mui/material'
 const SearchResultTile = ({ title, description, imgSrc }) => {
+  const isXS = window.innerWidth < 600
+
   return (
     <Paper
       elevation={3}
@@ -8,9 +10,8 @@ const SearchResultTile = ({ title, description, imgSrc }) => {
         backgroundColor: 'white',
         borderRadius: 12,
         display: 'flex',
-        padding: '20px 48px 20px 24px',
-        columnGap: 30,
-        borderColor: '#575be1',
+        padding: isXS ? '14px 30px 14px 16px' : '20px 48px 20px 24px',
+        columnGap: isXS ? 26 : 30,
         border: '2px solid #575be1',
       }}
     >
@@ -19,10 +20,10 @@ const SearchResultTile = ({ title, description, imgSrc }) => {
           borderRadius: 12,
           overflow: 'hidden',
           width: 'max-content',
-          height: '100px',
+          height: isXS ? '70px' : '100px',
         }}
       >
-        <img src={imgSrc} width={100} height="auto" />
+        <img src={imgSrc} width={isXS ? 70 : 100} height="auto" />
       </Box>
       <div
         style={{
@@ -36,7 +37,7 @@ const SearchResultTile = ({ title, description, imgSrc }) => {
       >
         <Typography
           sx={{
-            fontSize: '20px',
+            fontSize: { xs: '18px', sm: '20px' },
             fontWeight: 'bold',
             margin: 0,
           }}
@@ -45,7 +46,7 @@ const SearchResultTile = ({ title, description, imgSrc }) => {
         </Typography>
         <Typography
           sx={{
-            fontSize: '16px',
+            fontSize: { xs: '14.5px', sm: '16px' },
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
