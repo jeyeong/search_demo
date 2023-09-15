@@ -115,7 +115,9 @@ const App = () => {
             borderRadius: '12px',
           }}
         >
-          <Box sx={{ display: 'flex', alignContent: 'center' }}>
+          <Box
+            sx={{ display: 'flex', alignContent: 'center', overflowX: 'auto' }}
+          >
             <Box
               sx={{
                 display: 'flex',
