@@ -40,6 +40,9 @@ const SearchResultTile = ({ title, description, imgSrc }) => {
             fontSize: { xs: '18px', sm: '20px' },
             fontWeight: 'bold',
             margin: 0,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           {title}

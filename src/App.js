@@ -12,6 +12,7 @@ import debounce from 'lodash.debounce'
 import SearchIcon from '@mui/icons-material/Search'
 
 import SearchResultTile from './SearchResultTile'
+import { capitalizeWords } from './utils'
 
 const theme = createTheme({
   palette: {
@@ -43,13 +44,27 @@ const CATALOGS = [
     },
   },
   {
-    name: 'Groceries',
-    id: 'groceries',
-    placeholder: 'Wine pairings for date night',
+    name: 'Clothing',
+    id: 'asos',
+    placeholder: 'E.g. Date night men',
     getters: {
-      getTitle: (item) => item.name,
+      getTitle: (item) => capitalizeWords(item.name),
+      getDescription: (item) => {
+        const match = item.description?.match(/'Brand':\s*'([^']+)'/)
+        if (!match) return
+        else return match[1]
+      },
+      getImgSrc: (item) => item.images,
+    },
+  },
+  {
+    name: 'E-Commerce',
+    id: 'argos',
+    placeholder: 'E.g. iPhone 15',
+    getters: {
+      getTitle: (item) => item.title,
       getDescription: (item) => item.description,
-      getImgSrc: (item) => `https://${item.images}`,
+      getImgSrc: (item) => `https://${item.image}`,
     },
   },
 ]
@@ -59,6 +74,8 @@ const App = () => {
   const [catalogSelected, setCatalogSelected] = useState(0)
   const [query, setQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
+
+  const { getters } = CATALOGS[catalogSelected]
 
   const [debouncedSearchHandler] = useState(() => {
     const searchHandler = (query, catalogId) => {
@@ -78,8 +95,6 @@ const App = () => {
     setLoading(true)
     debouncedSearchHandler(query, CATALOGS[catalogSelected].id)
   }, [query, catalogSelected, debouncedSearchHandler])
-
-  const { getters } = CATALOGS[catalogSelected]
 
   const isXS = window.innerWidth < 600
 
@@ -154,7 +169,7 @@ const App = () => {
 
           <form
             style={{
-              marginTop: 18,
+              marginTop: 20,
               marginBottom: 10,
               padding: isXS ? 12 : 16,
               border: '1.5px solid rgb(221, 221, 221)',
