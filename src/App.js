@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import {
   Chip,
   createTheme,
@@ -6,37 +6,37 @@ import {
   CircularProgress,
   Box,
   Typography,
-} from '@mui/material'
-import debounce from 'lodash.debounce'
+} from "@mui/material";
+import debounce from "lodash.debounce";
 
-import SearchIcon from '@mui/icons-material/Search'
+import SearchIcon from "@mui/icons-material/Search";
 
-import SearchResultTile from './SearchResultTile'
-import { capitalizeWords } from './utils'
+import SearchResultTile from "./SearchResultTile";
+import { capitalizeWords } from "./utils";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#575be1',
-      contrastText: '#fff',
+      main: "#575be1",
+      contrastText: "#fff",
     },
     white: {
-      main: '#FFFFFF',
+      main: "#FFFFFF",
     },
   },
   typography: {
     fontSize: 18,
   },
-})
+});
 
 const CATALOGS = [
   // { name: 'Nike', id: 'nike' },
   // { name: 'Walmart', id: 'walmart' },
   // { name: 'Netflix', id: 'netflix' },
   {
-    name: 'Movies',
-    id: 'movies',
-    placeholder: 'E.g. Super hero movies for my 10 year old',
+    name: "Movies",
+    id: "movies",
+    placeholder: "E.g. Super hero movies for my 10 year old",
     getters: {
       getTitle: (item) => item.Title,
       getDescription: (item) => item.Overview,
@@ -45,9 +45,9 @@ const CATALOGS = [
   },
 
   {
-    name: 'E-Commerce',
-    id: 'argos',
-    placeholder: 'E.g. iPhone 15',
+    name: "E-Commerce",
+    id: "argos",
+    placeholder: "E.g. iPhone 15",
     getters: {
       getTitle: (item) => item.title,
       getDescription: (item) => item.description,
@@ -55,28 +55,28 @@ const CATALOGS = [
     },
   },
   {
-    name: 'Clothing',
-    id: 'asos',
-    placeholder: 'E.g. Date night men',
+    name: "Clothing",
+    id: "asos",
+    placeholder: "E.g. Date night men",
     getters: {
       getTitle: (item) => capitalizeWords(item.name),
       getDescription: (item) => {
-        const match = item.description?.match(/'Brand':\s*'([^']+)'/)
-        if (!match) return
-        else return match[1]
+        const match = item.description?.match(/'Brand':\s*'([^']+)'/);
+        if (!match) return;
+        else return match[1];
       },
       getImgSrc: (item) => item.images,
     },
   },
-]
+];
 
 const App = () => {
-  const [loading, setLoading] = useState(false)
-  const [catalogSelected, setCatalogSelected] = useState(0)
-  const [query, setQuery] = useState('')
-  const [searchResults, setSearchResults] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [catalogSelected, setCatalogSelected] = useState(0);
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
-  const { getters } = CATALOGS[catalogSelected]
+  const { getters } = CATALOGS[catalogSelected];
 
   const [debouncedSearchHandler] = useState(() => {
     const searchHandler = (query, catalogId) => {
@@ -85,19 +85,19 @@ const App = () => {
       )
         .then((res) => res.json())
         .then((res) => {
-          setSearchResults(res.matches)
-          setLoading(false)
-        })
-    }
-    return debounce(searchHandler, 1000)
-  })
+          setSearchResults(res.matches);
+          setLoading(false);
+        });
+    };
+    return debounce(searchHandler, 1000);
+  });
 
   useEffect(() => {
-    setLoading(true)
-    debouncedSearchHandler(query, CATALOGS[catalogSelected].id)
-  }, [query, catalogSelected, debouncedSearchHandler])
+    setLoading(true);
+    debouncedSearchHandler(query, CATALOGS[catalogSelected].id);
+  }, [query, catalogSelected, debouncedSearchHandler]);
 
-  const isXS = window.innerWidth < 600
+  const isXS = window.innerWidth < 600;
 
   return (
     <Box>
@@ -105,27 +105,27 @@ const App = () => {
         <Box
           className="App"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '600px',
-            overflowX: 'hidden',
-            backgroundColor: '#27242C',
-            padding: { xs: '16px', sm: '40px' },
-            paddingTop: '25px',
-            borderRadius: '12px',
+            display: "flex",
+            flexDirection: "column",
+            height: "600px",
+            overflowX: "hidden",
+            backgroundColor: "#27242C",
+            padding: { xs: "16px", sm: "40px" },
+            paddingTop: "25px",
+            borderRadius: "12px",
           }}
         >
           <Box
-            sx={{ display: 'flex', alignContent: 'center', overflowX: 'auto' }}
+            sx={{ display: "flex", alignContent: "center", overflowX: "auto" }}
           >
             <Box
               sx={{
-                display: 'flex',
-                columnGap: { xs: '8px', sm: '12px' },
+                display: "flex",
+                columnGap: { xs: "8px", sm: "12px" },
                 flex: 1,
               }}
             >
-              {CATALOGS.map(({ name, id }, index) => (
+              {/* {CATALOGS.map(({ name, id }, index) => (
                 <Chip
                   key={id}
                   label={name}
@@ -148,22 +148,25 @@ const App = () => {
                     fontWeight: 'bold',
                   }}
                 />
-              ))}
+              ))}  */}
             </Box>
             <Box
               sx={{
-                display: { xs: 'none', sm: 'flex' },
-                // borderRadius: '20px',
-                backgroundColor: 'primary.main',
-                width: '150px',
+                display: { xs: "none", sm: "flex" },
+                borderRadius: "5px",
+                backgroundColor: "primary.main",
+                width: "150px",
                 p: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               <Typography
                 color="white.main"
-                sx={{ fontSize: '14px', fontWeight: 'bold' }}
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                }}
               >
                 TRY IT YOURSELF!
               </Typography>
@@ -175,22 +178,22 @@ const App = () => {
               marginTop: 20,
               marginBottom: 10,
               padding: isXS ? 12 : 16,
-              border: '1.5px solid rgb(221, 221, 221)',
+              border: "1.5px solid rgb(221, 221, 221)",
               borderRadius: 50,
               boxShadow:
-                '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
-              backgroundColor: '#fff',
+                "0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)",
+              backgroundColor: "#fff",
             }}
           >
             <div
-              style={{ display: 'flex', alignItems: 'center', width: '100%' }}
+              style={{ display: "flex", alignItems: "center", width: "100%" }}
             >
               <div
                 style={{
                   paddingLeft: 6,
                   paddingRight: 12,
-                  display: 'grid',
-                  placeItems: 'center',
+                  display: "grid",
+                  placeItems: "center",
                 }}
               >
                 <SearchIcon />
@@ -198,14 +201,14 @@ const App = () => {
               <input
                 value={query}
                 onChange={(e) => {
-                  setQuery(e.target.value)
+                  setQuery(e.target.value);
                 }}
                 name="query-box"
                 style={{
-                  border: 'none',
-                  outline: 'none',
-                  width: '100%',
-                  fontSize: isXS ? '17px' : '18px',
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  fontSize: isXS ? "17px" : "18px",
                 }}
                 type="search"
                 autoComplete="off"
@@ -220,21 +223,21 @@ const App = () => {
           <div
             style={{
               flex: 1,
-              overflowY: 'auto',
+              overflowY: "auto",
               marginTop: isXS ? 14 : 16,
               paddingRight: 8,
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
               rowGap: isXS ? 14 : 16,
             }}
           >
             {loading ? (
               <Box
                 sx={{
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
                 <CircularProgress color="white" size={50} />
@@ -253,7 +256,7 @@ const App = () => {
         </Box>
       </ThemeProvider>
     </Box>
-  )
-}
+  );
+};
 
-export default App
+export default App;
