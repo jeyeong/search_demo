@@ -43,6 +43,17 @@ const CATALOGS = [
       getImgSrc: (item) => item.Poster_Url,
     },
   },
+
+  {
+    name: 'E-Commerce',
+    id: 'argos',
+    placeholder: 'E.g. iPhone 15',
+    getters: {
+      getTitle: (item) => item.title,
+      getDescription: (item) => item.description,
+      getImgSrc: (item) => `https://${item.image}`,
+    },
+  },
   {
     name: 'Clothing',
     id: 'asos',
@@ -55,16 +66,6 @@ const CATALOGS = [
         else return match[1]
       },
       getImgSrc: (item) => item.images,
-    },
-  },
-  {
-    name: 'E-Commerce',
-    id: 'argos',
-    placeholder: 'E.g. iPhone 15',
-    getters: {
-      getTitle: (item) => item.title,
-      getDescription: (item) => item.description,
-      getImgSrc: (item) => `https://${item.image}`,
     },
   },
 ]
@@ -133,7 +134,7 @@ const App = () => {
                   color={'primary'}
                   variant={index === catalogSelected ? 'filled' : 'outlined'}
                   sx={{
-                    fontSize: { xs: '16px', sm: '20px' },
+                    fontSize: { xs: '16px', sm: '18px' },
                     padding: { xs: '16px 4px', sm: '20px 8px' },
                     borderRadius: '30px',
                     backgroundColor: index !== catalogSelected && '#eee',
